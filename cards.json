@@ -7,5 +7,14 @@
     "tagline": "第十一型 · 凪",
     "path": "./cards/giyu-water-breathing/",
     "thumb": "./cards/giyu-water-breathing/assets/subject.png"
+  },
+  {
+    "id": "mitsuri-infinity-castle",
+    "title": "甘露寺蜜璃",
+    "subtitle": "恋柱",
+    "technique": "恋之呼吸",
+    "tagline": "无限城篇",
+    "path": "./cards/mitsuri-infinity-castle/",
+    "thumb": "./cards/mitsuri-infinity-castle/assets/subject.png"
   }
 ]
