@@ -8,11 +8,11 @@
   "description": "恋柱甘露寺蜜璃于无限城中施展恋之呼吸，鞭刀如虹。",
   "font": "/usr/share/fonts/opentype/noto/NotoSerifCJK-Bold.ttc",
   "assets": {
+    "model": "./assets/card.glb",
     "subject": "./assets/subject.png",
     "background": "./assets/background.png",
     "text": "./assets/text.png",
-    "lineart": "./assets/lineart.png",
-    "model": "./assets/card.glb"
+    "lineart": "./assets/lineart.png"
   },
   "parameters": {
     "subjectScale": 1.25,
@@ -22,9 +22,6 @@
   },
   "safeArea": {
     "scale": 1.12,
-    "offset": [
-      -0.06,
-      -0.085
-    ]
+    "offset": [-0.06, -0.085]
   }
 }

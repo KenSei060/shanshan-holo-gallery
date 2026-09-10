@@ -5858,9 +5858,9 @@ class Material extends EventDispatcher {
     function extractFromCache(cache) {
       const values = [];
       for (const key in cache) {
-        const data = cache[key];
-        delete data.metadata;
-        values.push(data);
+        const data2 = cache[key];
+        delete data2.metadata;
+        values.push(data2);
       }
       return values;
     }
@@ -6620,17 +6620,17 @@ class BufferGeometry extends EventDispatcher {
     }
   }
   toNonIndexed() {
-    function convertBufferAttribute(attribute, indices) {
+    function convertBufferAttribute(attribute, indices2) {
       const array = attribute.array;
       const itemSize = attribute.itemSize;
       const normalized = attribute.normalized;
-      const array2 = new array.constructor(indices.length * itemSize);
+      const array2 = new array.constructor(indices2.length * itemSize);
       let index = 0, index2 = 0;
-      for (let i = 0, l = indices.length;i < l; i++) {
+      for (let i = 0, l = indices2.length;i < l; i++) {
         if (attribute.isInterleavedBufferAttribute) {
-          index = indices[i] * attribute.data.stride + attribute.offset;
+          index = indices2[i] * attribute.data.stride + attribute.offset;
         } else {
-          index = indices[i] * itemSize;
+          index = indices2[i] * itemSize;
         }
         for (let j = 0;j < itemSize; j++) {
           array2[index2++] = array[index++];
@@ -7054,12 +7054,12 @@ class BoxGeometry extends BufferGeometry {
     this.setAttribute("position", new Float32BufferAttribute(vertices, 3));
     this.setAttribute("normal", new Float32BufferAttribute(normals, 3));
     this.setAttribute("uv", new Float32BufferAttribute(uvs, 2));
-    function buildPlane(u, v, w, udir, vdir, width, height, depth, gridX, gridY, materialIndex) {
-      const segmentWidth = width / gridX;
-      const segmentHeight = height / gridY;
-      const widthHalf = width / 2;
-      const heightHalf = height / 2;
-      const depthHalf = depth / 2;
+    function buildPlane(u, v, w, udir, vdir, width2, height2, depth2, gridX, gridY, materialIndex) {
+      const segmentWidth = width2 / gridX;
+      const segmentHeight = height2 / gridY;
+      const widthHalf = width2 / 2;
+      const heightHalf = height2 / 2;
+      const depthHalf = depth2 / 2;
       const gridX1 = gridX + 1;
       const gridY1 = gridY + 1;
       let vertexCounter = 0;
@@ -7075,7 +7075,7 @@ class BoxGeometry extends BufferGeometry {
           vertices.push(vector.x, vector.y, vector.z);
           vector[u] = 0;
           vector[v] = 0;
-          vector[w] = depth > 0 ? 1 : -1;
+          vector[w] = depth2 > 0 ? 1 : -1;
           normals.push(vector.x, vector.y, vector.z);
           uvs.push(ix / gridX);
           uvs.push(1 - iy / gridY);
@@ -10856,12 +10856,12 @@ class SpotLightShadow extends LightShadow {
   }
   updateMatrices(light) {
     const camera = this.camera;
-    const fov = RAD2DEG * 2 * light.angle * this.focus;
-    const aspect = this.mapSize.width / this.mapSize.height * this.aspect;
+    const fov2 = RAD2DEG * 2 * light.angle * this.focus;
+    const aspect2 = this.mapSize.width / this.mapSize.height * this.aspect;
     const far = light.distance || camera.far;
-    if (fov !== camera.fov || aspect !== camera.aspect || far !== camera.far) {
-      camera.fov = fov;
-      camera.aspect = aspect;
+    if (fov2 !== camera.fov || aspect2 !== camera.aspect || far !== camera.far) {
+      camera.fov = fov2;
+      camera.aspect = aspect2;
       camera.far = far;
       camera.updateProjectionMatrix();
     }
@@ -16156,7 +16156,7 @@ function WebGLBackground(renderer, cubemaps, cubeuvmaps, state, objects, alpha, 
         }));
         boxMesh.geometry.deleteAttribute("normal");
         boxMesh.geometry.deleteAttribute("uv");
-        boxMesh.onBeforeRender = function(renderer, scene, camera) {
+        boxMesh.onBeforeRender = function(renderer2, scene2, camera) {
           this.matrixWorld.copyPosition(camera.matrixWorld);
         };
         Object.defineProperty(boxMesh.material, "envMap", {
@@ -16226,9 +16226,9 @@ function WebGLBackground(renderer, cubemaps, cubeuvmaps, state, objects, alpha, 
       renderList.unshift(planeMesh, planeMesh.geometry, planeMesh.material, 0, 0, null);
     }
   }
-  function setClear(color, alpha) {
+  function setClear(color, alpha2) {
     color.getRGB(_rgb, getUnlitUniformColorSpace(renderer));
-    state.buffers.color.setClear(_rgb.r, _rgb.g, _rgb.b, alpha, premultipliedAlpha);
+    state.buffers.color.setClear(_rgb.r, _rgb.g, _rgb.b, alpha2, premultipliedAlpha);
   }
   function dispose() {
     if (boxMesh !== undefined) {
@@ -16246,16 +16246,16 @@ function WebGLBackground(renderer, cubemaps, cubeuvmaps, state, objects, alpha, 
     getClearColor: function() {
       return clearColor;
     },
-    setClearColor: function(color, alpha = 1) {
+    setClearColor: function(color, alpha2 = 1) {
       clearColor.set(color);
-      clearAlpha = alpha;
+      clearAlpha = alpha2;
       setClear(clearColor, clearAlpha);
     },
     getClearAlpha: function() {
       return clearAlpha;
     },
-    setClearAlpha: function(alpha) {
-      clearAlpha = alpha;
+    setClearAlpha: function(alpha2) {
+      clearAlpha = alpha2;
       setClear(clearColor, clearAlpha);
     },
     render,
@@ -16372,13 +16372,13 @@ function WebGLBindingStates(gl, attributes) {
   }
   function saveCache(object, geometry, program, index) {
     const cache = {};
-    const attributes = geometry.attributes;
+    const attributes2 = geometry.attributes;
     let attributesNum = 0;
     const programAttributes = program.getAttributes();
     for (const name in programAttributes) {
       const programAttribute = programAttributes[name];
       if (programAttribute.location >= 0) {
-        let attribute = attributes[name];
+        let attribute = attributes2[name];
         if (attribute === undefined) {
           if (name === "instanceMatrix" && object.instanceMatrix)
             attribute = object.instanceMatrix;
@@ -16665,14 +16665,14 @@ function WebGLCapabilities(gl, extensions, parameters, utils) {
     }
     return true;
   }
-  function getMaxPrecision(precision) {
-    if (precision === "highp") {
+  function getMaxPrecision(precision2) {
+    if (precision2 === "highp") {
       if (gl.getShaderPrecisionFormat(gl.VERTEX_SHADER, gl.HIGH_FLOAT).precision > 0 && gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.HIGH_FLOAT).precision > 0) {
         return "highp";
       }
-      precision = "mediump";
+      precision2 = "mediump";
     }
-    if (precision === "mediump") {
+    if (precision2 === "mediump") {
       if (gl.getShaderPrecisionFormat(gl.VERTEX_SHADER, gl.MEDIUM_FLOAT).precision > 0 && gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.MEDIUM_FLOAT).precision > 0) {
         return "mediump";
       }
@@ -16996,9 +16996,9 @@ class PMREMGenerator {
     this._renderer.compile(tmpMesh, _flatCamera);
   }
   _sceneToCubeUV(scene, near, far, cubeUVRenderTarget, position) {
-    const fov = 90;
-    const aspect = 1;
-    const cubeCamera = new PerspectiveCamera(fov, aspect, near, far);
+    const fov2 = 90;
+    const aspect2 = 1;
+    const cubeCamera = new PerspectiveCamera(fov2, aspect2, near, far);
     const upSign = [1, -1, 1, 1, 1, 1];
     const forwardSign = [1, 1, 1, -1, -1, -1];
     const renderer = this._renderer;
@@ -17119,8 +17119,8 @@ class PMREMGenerator {
     const weights = [];
     let sum = 0;
     for (let i = 0;i < MAX_SAMPLES; ++i) {
-      const x = i / sigmaPixels;
-      const weight = Math.exp(-x * x / 2);
+      const x2 = i / sigmaPixels;
+      const weight = Math.exp(-x2 * x2 / 2);
       weights.push(weight);
       if (i === 0) {
         sum += weight;
@@ -20880,30 +20880,30 @@ function WebGLState(gl, extensions) {
     return false;
   }
   function drawBuffers(renderTarget, framebuffer) {
-    let drawBuffers = defaultDrawbuffers;
+    let drawBuffers2 = defaultDrawbuffers;
     let needsUpdate = false;
     if (renderTarget) {
-      drawBuffers = currentDrawbuffers.get(framebuffer);
-      if (drawBuffers === undefined) {
-        drawBuffers = [];
-        currentDrawbuffers.set(framebuffer, drawBuffers);
+      drawBuffers2 = currentDrawbuffers.get(framebuffer);
+      if (drawBuffers2 === undefined) {
+        drawBuffers2 = [];
+        currentDrawbuffers.set(framebuffer, drawBuffers2);
       }
       const textures = renderTarget.textures;
-      if (drawBuffers.length !== textures.length || drawBuffers[0] !== gl.COLOR_ATTACHMENT0) {
+      if (drawBuffers2.length !== textures.length || drawBuffers2[0] !== gl.COLOR_ATTACHMENT0) {
         for (let i = 0, il = textures.length;i < il; i++) {
-          drawBuffers[i] = gl.COLOR_ATTACHMENT0 + i;
+          drawBuffers2[i] = gl.COLOR_ATTACHMENT0 + i;
         }
-        drawBuffers.length = textures.length;
+        drawBuffers2.length = textures.length;
         needsUpdate = true;
       }
     } else {
-      if (drawBuffers[0] !== gl.BACK) {
-        drawBuffers[0] = gl.BACK;
+      if (drawBuffers2[0] !== gl.BACK) {
+        drawBuffers2[0] = gl.BACK;
         needsUpdate = true;
       }
     }
     if (needsUpdate) {
-      gl.drawBuffers(drawBuffers);
+      gl.drawBuffers(drawBuffers2);
     }
   }
   function useProgram(program) {
@@ -21211,16 +21211,16 @@ function WebGLState(gl, extensions) {
       console.error("THREE.WebGLState:", error);
     }
   }
-  function scissor(scissor) {
-    if (currentScissor.equals(scissor) === false) {
-      gl.scissor(scissor.x, scissor.y, scissor.z, scissor.w);
-      currentScissor.copy(scissor);
+  function scissor(scissor2) {
+    if (currentScissor.equals(scissor2) === false) {
+      gl.scissor(scissor2.x, scissor2.y, scissor2.z, scissor2.w);
+      currentScissor.copy(scissor2);
     }
   }
-  function viewport(viewport) {
-    if (currentViewport.equals(viewport) === false) {
-      gl.viewport(viewport.x, viewport.y, viewport.z, viewport.w);
-      currentViewport.copy(viewport);
+  function viewport(viewport2) {
+    if (currentViewport.equals(viewport2) === false) {
+      gl.viewport(viewport2.x, viewport2.y, viewport2.z, viewport2.w);
+      currentViewport.copy(viewport2);
     }
   }
   function updateUBOMapping(uniformsGroup, program) {
@@ -21348,7 +21348,7 @@ function WebGLTextures(_gl, extensions, state, properties, capabilities, utils, 
   const supportsInvalidateFramebuffer = typeof navigator === "undefined" ? false : /OculusBrowser/g.test(navigator.userAgent);
   const _imageDimensions = new Vector2;
   const _videoTextures = new WeakMap;
-  let _canvas;
+  let _canvas2;
   const _sources = new WeakMap;
   let useOffscreenCanvas = false;
   try {
@@ -21367,9 +21367,9 @@ function WebGLTextures(_gl, extensions, state, properties, capabilities, utils, 
       if (typeof HTMLImageElement !== "undefined" && image instanceof HTMLImageElement || typeof HTMLCanvasElement !== "undefined" && image instanceof HTMLCanvasElement || typeof ImageBitmap !== "undefined" && image instanceof ImageBitmap || typeof VideoFrame !== "undefined" && image instanceof VideoFrame) {
         const width = Math.floor(scale * dimensions.width);
         const height = Math.floor(scale * dimensions.height);
-        if (_canvas === undefined)
-          _canvas = createCanvas(width, height);
-        const canvas = needsNewCanvas ? createCanvas(width, height) : _canvas;
+        if (_canvas2 === undefined)
+          _canvas2 = createCanvas(width, height);
+        const canvas = needsNewCanvas ? createCanvas(width, height) : _canvas2;
         canvas.width = width;
         canvas.height = height;
         const context = canvas.getContext("2d");
@@ -22001,7 +22001,7 @@ function WebGLTextures(_gl, extensions, state, properties, capabilities, utils, 
           if (useTexStorage) {
             state.texStorage2D(_gl.TEXTURE_2D, levels, glInternalFormat, image.width, image.height);
           } else {
-            let width = image.width, height = image.height;
+            let { width, height } = image;
             for (let i = 0;i < levels; i++) {
               state.texImage2D(_gl.TEXTURE_2D, i, glInternalFormat, width, height, 0, glFormat, glType, null);
               width >>= 1;
@@ -22388,12 +22388,12 @@ function WebGLTextures(_gl, extensions, state, properties, capabilities, utils, 
         renderTargetProperties.__webglColorRenderbuffer = [];
         state.bindFramebuffer(_gl.FRAMEBUFFER, renderTargetProperties.__webglMultisampledFramebuffer);
         for (let i = 0;i < textures.length; i++) {
-          const texture = textures[i];
+          const texture2 = textures[i];
           renderTargetProperties.__webglColorRenderbuffer[i] = _gl.createRenderbuffer();
           _gl.bindRenderbuffer(_gl.RENDERBUFFER, renderTargetProperties.__webglColorRenderbuffer[i]);
-          const glFormat = utils.convert(texture.format, texture.colorSpace);
-          const glType = utils.convert(texture.type);
-          const glInternalFormat = getInternalFormat(texture.internalFormat, glFormat, glType, texture.colorSpace, renderTarget.isXRRenderTarget === true);
+          const glFormat = utils.convert(texture2.format, texture2.colorSpace);
+          const glType = utils.convert(texture2.type);
+          const glInternalFormat = getInternalFormat(texture2.internalFormat, glFormat, glType, texture2.colorSpace, renderTarget.isXRRenderTarget === true);
           const samples = getRenderTargetSamples(renderTarget);
           _gl.renderbufferStorageMultisample(_gl.RENDERBUFFER, samples, glInternalFormat, renderTarget.width, renderTarget.height);
           _gl.framebufferRenderbuffer(_gl.FRAMEBUFFER, _gl.COLOR_ATTACHMENT0 + i, _gl.RENDERBUFFER, renderTargetProperties.__webglColorRenderbuffer[i]);
@@ -23086,14 +23086,14 @@ class WebXRManager extends EventDispatcher {
         const inputSource = event.added[i];
         let controllerIndex = controllerInputSources.indexOf(inputSource);
         if (controllerIndex === -1) {
-          for (let i = 0;i < controllers.length; i++) {
-            if (i >= controllerInputSources.length) {
+          for (let i2 = 0;i2 < controllers.length; i2++) {
+            if (i2 >= controllerInputSources.length) {
               controllerInputSources.push(inputSource);
-              controllerIndex = i;
+              controllerIndex = i2;
               break;
-            } else if (controllerInputSources[i] === null) {
-              controllerInputSources[i] = inputSource;
-              controllerIndex = i;
+            } else if (controllerInputSources[i2] === null) {
+              controllerInputSources[i2] = inputSource;
+              controllerIndex = i2;
               break;
             }
           }
@@ -23108,12 +23108,12 @@ class WebXRManager extends EventDispatcher {
     }
     const cameraLPos = new Vector3;
     const cameraRPos = new Vector3;
-    function setProjectionFromUnion(camera, cameraL, cameraR) {
-      cameraLPos.setFromMatrixPosition(cameraL.matrixWorld);
-      cameraRPos.setFromMatrixPosition(cameraR.matrixWorld);
+    function setProjectionFromUnion(camera, cameraL2, cameraR2) {
+      cameraLPos.setFromMatrixPosition(cameraL2.matrixWorld);
+      cameraRPos.setFromMatrixPosition(cameraR2.matrixWorld);
       const ipd = cameraLPos.distanceTo(cameraRPos);
-      const projL = cameraL.projectionMatrix.elements;
-      const projR = cameraR.projectionMatrix.elements;
+      const projL = cameraL2.projectionMatrix.elements;
+      const projR = cameraR2.projectionMatrix.elements;
       const near = projL[14] / (projL[10] - 1);
       const far = projL[14] / (projL[10] + 1);
       const topFov = (projL[9] + 1) / projL[5];
@@ -23124,14 +23124,14 @@ class WebXRManager extends EventDispatcher {
       const right = near * rightFov;
       const zOffset = ipd / (-leftFov + rightFov);
       const xOffset = zOffset * -leftFov;
-      cameraL.matrixWorld.decompose(camera.position, camera.quaternion, camera.scale);
+      cameraL2.matrixWorld.decompose(camera.position, camera.quaternion, camera.scale);
       camera.translateX(xOffset);
       camera.translateZ(zOffset);
       camera.matrixWorld.compose(camera.position, camera.quaternion, camera.scale);
       camera.matrixWorldInverse.copy(camera.matrixWorld).invert();
       if (projL[10] === -1) {
-        camera.projectionMatrix.copy(cameraL.projectionMatrix);
-        camera.projectionMatrixInverse.copy(cameraL.projectionMatrixInverse);
+        camera.projectionMatrix.copy(cameraL2.projectionMatrix);
+        camera.projectionMatrixInverse.copy(cameraL2.projectionMatrixInverse);
       } else {
         const near2 = near + zOffset;
         const far2 = far + zOffset;
@@ -23176,30 +23176,30 @@ class WebXRManager extends EventDispatcher {
       cameraL.layers.mask = cameraXR.layers.mask & 3;
       cameraR.layers.mask = cameraXR.layers.mask & 5;
       const parent = camera.parent;
-      const cameras = cameraXR.cameras;
+      const cameras2 = cameraXR.cameras;
       updateCamera(cameraXR, parent);
-      for (let i = 0;i < cameras.length; i++) {
-        updateCamera(cameras[i], parent);
+      for (let i = 0;i < cameras2.length; i++) {
+        updateCamera(cameras2[i], parent);
       }
-      if (cameras.length === 2) {
+      if (cameras2.length === 2) {
         setProjectionFromUnion(cameraXR, cameraL, cameraR);
       } else {
         cameraXR.projectionMatrix.copy(cameraL.projectionMatrix);
       }
       updateUserCamera(camera, cameraXR, parent);
     };
-    function updateUserCamera(camera, cameraXR, parent) {
+    function updateUserCamera(camera, cameraXR2, parent) {
       if (parent === null) {
-        camera.matrix.copy(cameraXR.matrixWorld);
+        camera.matrix.copy(cameraXR2.matrixWorld);
       } else {
         camera.matrix.copy(parent.matrixWorld);
         camera.matrix.invert();
-        camera.matrix.multiply(cameraXR.matrixWorld);
+        camera.matrix.multiply(cameraXR2.matrixWorld);
       }
       camera.matrix.decompose(camera.position, camera.quaternion, camera.scale);
       camera.updateMatrixWorld(true);
-      camera.projectionMatrix.copy(cameraXR.projectionMatrix);
-      camera.projectionMatrixInverse.copy(cameraXR.projectionMatrixInverse);
+      camera.projectionMatrix.copy(cameraXR2.projectionMatrix);
+      camera.projectionMatrixInverse.copy(cameraXR2.projectionMatrixInverse);
       if (camera.isPerspectiveCamera) {
         camera.fov = RAD2DEG * 2 * Math.atan(1 / camera.projectionMatrix.elements[5]);
         camera.zoom = 1;
@@ -23702,7 +23702,7 @@ function WebGLUniformsGroups(gl, info, capabilities, state) {
           let arrayOffset = 0;
           for (let k = 0;k < values.length; k++) {
             const value = values[k];
-            const info = getUniformSize(value);
+            const info2 = getUniformSize(value);
             if (typeof value === "number" || typeof value === "boolean") {
               uniform.__data[0] = value;
               gl.bufferSubData(gl.UNIFORM_BUFFER, offset + arrayOffset, uniform.__data);
@@ -23721,7 +23721,7 @@ function WebGLUniformsGroups(gl, info, capabilities, state) {
               uniform.__data[11] = 0;
             } else {
               value.toArray(uniform.__data, arrayOffset);
-              arrayOffset += info.storage / Float32Array.BYTES_PER_ELEMENT;
+              arrayOffset += info2.storage / Float32Array.BYTES_PER_ELEMENT;
             }
           }
           gl.bufferSubData(gl.UNIFORM_BUFFER, offset, uniform.__data);
@@ -23767,17 +23767,17 @@ function WebGLUniformsGroups(gl, info, capabilities, state) {
         const values = Array.isArray(uniform.value) ? uniform.value : [uniform.value];
         for (let k = 0, kl = values.length;k < kl; k++) {
           const value = values[k];
-          const info = getUniformSize(value);
-          const chunkOffset = offset % chunkSize;
-          const chunkPadding = chunkOffset % info.boundary;
-          const chunkStart = chunkOffset + chunkPadding;
+          const info2 = getUniformSize(value);
+          const chunkOffset2 = offset % chunkSize;
+          const chunkPadding = chunkOffset2 % info2.boundary;
+          const chunkStart = chunkOffset2 + chunkPadding;
           offset += chunkPadding;
-          if (chunkStart !== 0 && chunkSize - chunkStart < info.storage) {
+          if (chunkStart !== 0 && chunkSize - chunkStart < info2.storage) {
             offset += chunkSize - chunkStart;
           }
-          uniform.__data = new Float32Array(info.storage / Float32Array.BYTES_PER_ELEMENT);
+          uniform.__data = new Float32Array(info2.storage / Float32Array.BYTES_PER_ELEMENT);
           uniform.__offset = offset;
-          offset += info.storage;
+          offset += info2.storage;
         }
       }
     }
@@ -23789,34 +23789,34 @@ function WebGLUniformsGroups(gl, info, capabilities, state) {
     return this;
   }
   function getUniformSize(value) {
-    const info = {
+    const info2 = {
       boundary: 0,
       storage: 0
     };
     if (typeof value === "number" || typeof value === "boolean") {
-      info.boundary = 4;
-      info.storage = 4;
+      info2.boundary = 4;
+      info2.storage = 4;
     } else if (value.isVector2) {
-      info.boundary = 8;
-      info.storage = 8;
+      info2.boundary = 8;
+      info2.storage = 8;
     } else if (value.isVector3 || value.isColor) {
-      info.boundary = 16;
-      info.storage = 12;
+      info2.boundary = 16;
+      info2.storage = 12;
     } else if (value.isVector4) {
-      info.boundary = 16;
-      info.storage = 16;
+      info2.boundary = 16;
+      info2.storage = 16;
     } else if (value.isMatrix3) {
-      info.boundary = 48;
-      info.storage = 48;
+      info2.boundary = 48;
+      info2.storage = 48;
     } else if (value.isMatrix4) {
-      info.boundary = 64;
-      info.storage = 64;
+      info2.boundary = 64;
+      info2.storage = 64;
     } else if (value.isTexture) {
       console.warn("THREE.WebGLRenderer: Texture samplers can not be part of an uniforms group.");
     } else {
       console.warn("THREE.WebGLRenderer: Unsupported uniform value type.", value);
     }
-    return info;
+    return info2;
   }
   function onUniformsGroupsDispose(event) {
     const uniformsGroup = event.target;
@@ -23912,8 +23912,8 @@ class WebGLRenderer {
     const _frustum = new Frustum;
     let _clippingEnabled = false;
     let _localClippingEnabled = false;
-    const _projScreenMatrix = new Matrix4;
-    const _vector3 = new Vector3;
+    const _projScreenMatrix2 = new Matrix4;
+    const _vector32 = new Vector3;
     const _vector4 = new Vector4;
     const _emptyScene = { background: null, fog: null, environment: null, overrideMaterial: null, isScene: true };
     let _renderBackground = false;
@@ -24104,7 +24104,7 @@ class WebGLRenderer {
     this.setClearAlpha = function() {
       background.setClearAlpha(...arguments);
     };
-    this.clear = function(color = true, depth = true, stencil = true) {
+    this.clear = function(color = true, depth2 = true, stencil2 = true) {
       let bits = 0;
       if (color) {
         let isIntegerFormat = false;
@@ -24137,10 +24137,10 @@ class WebGLRenderer {
           bits |= _gl.COLOR_BUFFER_BIT;
         }
       }
-      if (depth) {
+      if (depth2) {
         bits |= _gl.DEPTH_BUFFER_BIT;
       }
-      if (stencil) {
+      if (stencil2) {
         bits |= _gl.STENCIL_BUFFER_BIT;
         this.state.buffers.stencil.setMask(4294967295);
       }
@@ -24289,10 +24289,10 @@ class WebGLRenderer {
           if (!extensions.get("WEBGL_multi_draw")) {
             const starts = object._multiDrawStarts;
             const counts = object._multiDrawCounts;
-            const drawCount = object._multiDrawCount;
+            const drawCount2 = object._multiDrawCount;
             const bytesPerElement = index ? attributes.get(index).bytesPerElement : 1;
             const uniforms = properties.get(material).currentProgram.getUniforms();
-            for (let i = 0;i < drawCount; i++) {
+            for (let i = 0;i < drawCount2; i++) {
               uniforms.setValue(_gl, "_gl_DrawID", i);
               renderer.render(starts[i] / bytesPerElement, counts[i]);
             }
@@ -24348,7 +24348,7 @@ class WebGLRenderer {
         });
       }
       currentRenderState.setupLights();
-      const materials = new Set;
+      const materials2 = new Set;
       scene.traverse(function(object) {
         if (!(object.isMesh || object.isPoints || object.isLine || object.isSprite)) {
           return;
@@ -24359,29 +24359,29 @@ class WebGLRenderer {
             for (let i = 0;i < material.length; i++) {
               const material2 = material[i];
               prepareMaterial(material2, targetScene, object);
-              materials.add(material2);
+              materials2.add(material2);
             }
           } else {
             prepareMaterial(material, targetScene, object);
-            materials.add(material);
+            materials2.add(material);
           }
         }
       });
       currentRenderState = renderStateStack.pop();
-      return materials;
+      return materials2;
     };
     this.compileAsync = function(scene, camera, targetScene = null) {
-      const materials = this.compile(scene, camera, targetScene);
+      const materials2 = this.compile(scene, camera, targetScene);
       return new Promise((resolve) => {
         function checkMaterialsReady() {
-          materials.forEach(function(material) {
+          materials2.forEach(function(material) {
             const materialProperties = properties.get(material);
             const program = materialProperties.currentProgram;
             if (program.isReady()) {
-              materials.delete(material);
+              materials2.delete(material);
             }
           });
-          if (materials.size === 0) {
+          if (materials2.size === 0) {
             resolve(scene);
             return;
           }
@@ -24437,8 +24437,8 @@ class WebGLRenderer {
       currentRenderState = renderStates.get(scene, renderStateStack.length);
       currentRenderState.init(camera);
       renderStateStack.push(currentRenderState);
-      _projScreenMatrix.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
-      _frustum.setFromProjectionMatrix(_projScreenMatrix, WebGLCoordinateSystem, camera.reversedDepth);
+      _projScreenMatrix2.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
+      _frustum.setFromProjectionMatrix(_projScreenMatrix2, WebGLCoordinateSystem, camera.reversedDepth);
       _localClippingEnabled = this.localClippingEnabled;
       _clippingEnabled = clipping.init(this.clippingPlanes, _localClippingEnabled);
       currentRenderList = renderLists.get(scene, renderListStack.length);
@@ -24534,7 +24534,7 @@ class WebGLRenderer {
         } else if (object.isSprite) {
           if (!object.frustumCulled || _frustum.intersectsSprite(object)) {
             if (sortObjects) {
-              _vector4.setFromMatrixPosition(object.matrixWorld).applyMatrix4(_projScreenMatrix);
+              _vector4.setFromMatrixPosition(object.matrixWorld).applyMatrix4(_projScreenMatrix2);
             }
             const geometry = objects.update(object);
             const material = object.material;
@@ -24556,7 +24556,7 @@ class WebGLRenderer {
                   geometry.computeBoundingSphere();
                 _vector4.copy(geometry.boundingSphere.center);
               }
-              _vector4.applyMatrix4(object.matrixWorld).applyMatrix4(_projScreenMatrix);
+              _vector4.applyMatrix4(object.matrixWorld).applyMatrix4(_projScreenMatrix2);
             }
             if (Array.isArray(material)) {
               const groups = geometry.groups;
@@ -24578,10 +24578,10 @@ class WebGLRenderer {
         projectObject(children[i], camera, groupOrder, sortObjects);
       }
     }
-    function renderScene(currentRenderList, scene, camera, viewport) {
-      const opaqueObjects = currentRenderList.opaque;
-      const transmissiveObjects = currentRenderList.transmissive;
-      const transparentObjects = currentRenderList.transparent;
+    function renderScene(currentRenderList2, scene, camera, viewport) {
+      const opaqueObjects = currentRenderList2.opaque;
+      const transmissiveObjects = currentRenderList2.transmissive;
+      const transparentObjects = currentRenderList2.transparent;
       currentRenderState.setupLightsView(camera);
       if (_clippingEnabled === true)
         clipping.setGlobalState(_this.clippingPlanes, camera);
@@ -24710,8 +24710,8 @@ class WebGLRenderer {
       const lights = currentRenderState.state.lights;
       const shadowsArray = currentRenderState.state.shadowsArray;
       const lightsStateVersion = lights.state.version;
-      const parameters = programCache.getParameters(material, lights.state, shadowsArray, scene, object);
-      const programCacheKey = programCache.getProgramCacheKey(parameters);
+      const parameters2 = programCache.getParameters(material, lights.state, shadowsArray, scene, object);
+      const programCacheKey = programCache.getProgramCacheKey(parameters2);
       let programs = materialProperties.programs;
       materialProperties.environment = material.isMeshStandardMaterial ? scene.environment : null;
       materialProperties.fog = scene.fog;
@@ -24725,21 +24725,21 @@ class WebGLRenderer {
       let program = programs.get(programCacheKey);
       if (program !== undefined) {
         if (materialProperties.currentProgram === program && materialProperties.lightsStateVersion === lightsStateVersion) {
-          updateCommonMaterialProperties(material, parameters);
+          updateCommonMaterialProperties(material, parameters2);
           return program;
         }
       } else {
-        parameters.uniforms = programCache.getUniforms(material);
-        material.onBeforeCompile(parameters, _this);
-        program = programCache.acquireProgram(parameters, programCacheKey);
+        parameters2.uniforms = programCache.getUniforms(material);
+        material.onBeforeCompile(parameters2, _this);
+        program = programCache.acquireProgram(parameters2, programCacheKey);
         programs.set(programCacheKey, program);
-        materialProperties.uniforms = parameters.uniforms;
+        materialProperties.uniforms = parameters2.uniforms;
       }
       const uniforms = materialProperties.uniforms;
       if (!material.isShaderMaterial && !material.isRawShaderMaterial || material.clipping === true) {
         uniforms.clippingPlanes = clipping.uniform;
       }
-      updateCommonMaterialProperties(material, parameters);
+      updateCommonMaterialProperties(material, parameters2);
       materialProperties.needsLights = materialNeedsLights(material);
       materialProperties.lightsStateVersion = lightsStateVersion;
       if (materialProperties.needsLights) {
@@ -24774,24 +24774,24 @@ class WebGLRenderer {
       }
       return materialProperties.uniformsList;
     }
-    function updateCommonMaterialProperties(material, parameters) {
+    function updateCommonMaterialProperties(material, parameters2) {
       const materialProperties = properties.get(material);
-      materialProperties.outputColorSpace = parameters.outputColorSpace;
-      materialProperties.batching = parameters.batching;
-      materialProperties.batchingColor = parameters.batchingColor;
-      materialProperties.instancing = parameters.instancing;
-      materialProperties.instancingColor = parameters.instancingColor;
-      materialProperties.instancingMorph = parameters.instancingMorph;
-      materialProperties.skinning = parameters.skinning;
-      materialProperties.morphTargets = parameters.morphTargets;
-      materialProperties.morphNormals = parameters.morphNormals;
-      materialProperties.morphColors = parameters.morphColors;
-      materialProperties.morphTargetsCount = parameters.morphTargetsCount;
-      materialProperties.numClippingPlanes = parameters.numClippingPlanes;
-      materialProperties.numIntersection = parameters.numClipIntersection;
-      materialProperties.vertexAlphas = parameters.vertexAlphas;
-      materialProperties.vertexTangents = parameters.vertexTangents;
-      materialProperties.toneMapping = parameters.toneMapping;
+      materialProperties.outputColorSpace = parameters2.outputColorSpace;
+      materialProperties.batching = parameters2.batching;
+      materialProperties.batchingColor = parameters2.batchingColor;
+      materialProperties.instancing = parameters2.instancing;
+      materialProperties.instancingColor = parameters2.instancingColor;
+      materialProperties.instancingMorph = parameters2.instancingMorph;
+      materialProperties.skinning = parameters2.skinning;
+      materialProperties.morphTargets = parameters2.morphTargets;
+      materialProperties.morphNormals = parameters2.morphNormals;
+      materialProperties.morphColors = parameters2.morphColors;
+      materialProperties.morphTargetsCount = parameters2.morphTargetsCount;
+      materialProperties.numClippingPlanes = parameters2.numClippingPlanes;
+      materialProperties.numIntersection = parameters2.numClipIntersection;
+      materialProperties.vertexAlphas = parameters2.vertexAlphas;
+      materialProperties.vertexTangents = parameters2.vertexTangents;
+      materialProperties.toneMapping = parameters2.toneMapping;
     }
     function setProgram(camera, scene, geometry, material, object) {
       if (scene.isScene !== true)
@@ -24895,8 +24895,8 @@ class WebGLRenderer {
         refreshMaterial = true;
       }
       if (refreshProgram || _currentCamera !== camera) {
-        const reversedDepthBuffer = state.buffers.depth.getReversed();
-        if (reversedDepthBuffer && camera.reversedDepth !== true) {
+        const reversedDepthBuffer2 = state.buffers.depth.getReversed();
+        if (reversedDepthBuffer2 && camera.reversedDepth !== true) {
           camera._reversedDepth = true;
           camera.updateProjectionMatrix();
         }
@@ -24904,7 +24904,7 @@ class WebGLRenderer {
         p_uniforms.setValue(_gl, "viewMatrix", camera.matrixWorldInverse);
         const uCamPos = p_uniforms.map.cameraPosition;
         if (uCamPos !== undefined) {
-          uCamPos.setValue(_gl, _vector3.setFromMatrixPosition(camera.matrixWorld));
+          uCamPos.setValue(_gl, _vector32.setFromMatrixPosition(camera.matrixWorld));
         }
         if (capabilities.logarithmicDepthBuffer) {
           p_uniforms.setValue(_gl, "logDepthBufFC", 2 / (Math.log(camera.far + 1) / Math.LN2));
@@ -25133,8 +25133,8 @@ class WebGLRenderer {
             _gl.readPixels(x, y, width, height, utils.convert(textureFormat), utils.convert(textureType), buffer);
           }
         } finally {
-          const framebuffer = _currentRenderTarget !== null ? properties.get(_currentRenderTarget).__webglFramebuffer : null;
-          state.bindFramebuffer(_gl.FRAMEBUFFER, framebuffer);
+          const framebuffer2 = _currentRenderTarget !== null ? properties.get(_currentRenderTarget).__webglFramebuffer : null;
+          state.bindFramebuffer(_gl.FRAMEBUFFER, framebuffer2);
         }
       }
     };
@@ -25201,13 +25201,13 @@ class WebGLRenderer {
           dstLevel = 0;
         }
       }
-      let width, height, depth, minX, minY, minZ;
+      let width, height, depth2, minX, minY, minZ;
       let dstX, dstY, dstZ;
       const image = srcTexture.isCompressedTexture ? srcTexture.mipmaps[dstLevel] : srcTexture.image;
       if (srcRegion !== null) {
         width = srcRegion.max.x - srcRegion.min.x;
         height = srcRegion.max.y - srcRegion.min.y;
-        depth = srcRegion.isBox3 ? srcRegion.max.z - srcRegion.min.z : 1;
+        depth2 = srcRegion.isBox3 ? srcRegion.max.z - srcRegion.min.z : 1;
         minX = srcRegion.min.x;
         minY = srcRegion.min.y;
         minZ = srcRegion.isBox3 ? srcRegion.min.z : 0;
@@ -25216,11 +25216,11 @@ class WebGLRenderer {
         width = Math.floor(image.width * levelScale);
         height = Math.floor(image.height * levelScale);
         if (srcTexture.isDataArrayTexture) {
-          depth = image.depth;
+          depth2 = image.depth;
         } else if (srcTexture.isData3DTexture) {
-          depth = Math.floor(image.depth * levelScale);
+          depth2 = Math.floor(image.depth * levelScale);
         } else {
-          depth = 1;
+          depth2 = 1;
         }
         minX = 0;
         minY = 0;
@@ -25270,7 +25270,7 @@ class WebGLRenderer {
         const dstRenderTargetProperties = properties.get(dstTextureProperties.__renderTarget);
         state.bindFramebuffer(_gl.READ_FRAMEBUFFER, srcRenderTargetProperties.__webglFramebuffer);
         state.bindFramebuffer(_gl.DRAW_FRAMEBUFFER, dstRenderTargetProperties.__webglFramebuffer);
-        for (let i = 0;i < depth; i++) {
+        for (let i = 0;i < depth2; i++) {
           if (isSrc3D) {
             _gl.framebufferTextureLayer(_gl.READ_FRAMEBUFFER, _gl.COLOR_ATTACHMENT0, properties.get(srcTexture).__webglTexture, srcLevel, minZ + i);
             _gl.framebufferTextureLayer(_gl.DRAW_FRAMEBUFFER, _gl.COLOR_ATTACHMENT0, properties.get(dstTexture).__webglTexture, dstLevel, dstZ + i);
@@ -25284,7 +25284,7 @@ class WebGLRenderer {
         const dstTextureProperties = properties.get(dstTexture);
         state.bindFramebuffer(_gl.READ_FRAMEBUFFER, _srcFramebuffer);
         state.bindFramebuffer(_gl.DRAW_FRAMEBUFFER, _dstFramebuffer);
-        for (let i = 0;i < depth; i++) {
+        for (let i = 0;i < depth2; i++) {
           if (isSrc3D) {
             _gl.framebufferTextureLayer(_gl.READ_FRAMEBUFFER, _gl.COLOR_ATTACHMENT0, srcTextureProperties.__webglTexture, srcLevel, minZ + i);
           } else {
@@ -25308,11 +25308,11 @@ class WebGLRenderer {
       } else {
         if (isDst3D) {
           if (srcTexture.isDataTexture || srcTexture.isData3DTexture) {
-            _gl.texSubImage3D(glTarget, dstLevel, dstX, dstY, dstZ, width, height, depth, glFormat, glType, image.data);
+            _gl.texSubImage3D(glTarget, dstLevel, dstX, dstY, dstZ, width, height, depth2, glFormat, glType, image.data);
           } else if (dstTexture.isCompressedArrayTexture) {
-            _gl.compressedTexSubImage3D(glTarget, dstLevel, dstX, dstY, dstZ, width, height, depth, glFormat, image.data);
+            _gl.compressedTexSubImage3D(glTarget, dstLevel, dstX, dstY, dstZ, width, height, depth2, glFormat, image.data);
           } else {
-            _gl.texSubImage3D(glTarget, dstLevel, dstX, dstY, dstZ, width, height, depth, glFormat, glType, image);
+            _gl.texSubImage3D(glTarget, dstLevel, dstX, dstY, dstZ, width, height, depth2, glFormat, glType, image);
           }
         } else {
           if (srcTexture.isDataTexture) {
@@ -26236,8 +26236,8 @@ class GLTFMeshoptCompression {
         const stride = extensionDef.byteStride;
         const source = new Uint8Array(res, byteOffset, byteLength);
         if (decoder.decodeGltfBufferAsync) {
-          return decoder.decodeGltfBufferAsync(count, stride, source, extensionDef.mode, extensionDef.filter).then(function(res) {
-            return res.buffer;
+          return decoder.decodeGltfBufferAsync(count, stride, source, extensionDef.mode, extensionDef.filter).then(function(res2) {
+            return res2.buffer;
           });
         } else {
           return decoder.ready.then(function() {
@@ -27122,7 +27122,7 @@ class GLTFParser {
     } else if (sourceDef.uri === undefined) {
       throw new Error("THREE.GLTFLoader: Image " + sourceIndex + " is missing URI and bufferView");
     }
-    const promise = Promise.resolve(sourceURI).then(function(sourceURI) {
+    const promise = Promise.resolve(sourceURI).then(function(sourceURI2) {
       return new Promise(function(resolve, reject) {
         let onLoad = resolve;
         if (loader.isImageBitmapLoader === true) {
@@ -27132,7 +27132,7 @@ class GLTFParser {
             resolve(texture);
           };
         }
-        loader.load(LoaderUtils.resolveURL(sourceURI, options.path), onLoad, undefined, reject);
+        loader.load(LoaderUtils.resolveURL(sourceURI2, options.path), onLoad, undefined, reject);
       });
     }).then(function(texture) {
       if (isObjectURL === true) {
@@ -27691,10 +27691,10 @@ class GLTFParser {
             reducedAssociations.set(key, value);
           }
         }
-        node.traverse((node) => {
-          const mappings = parser.associations.get(node);
+        node.traverse((node2) => {
+          const mappings = parser.associations.get(node2);
           if (mappings != null) {
-            reducedAssociations.set(node, mappings);
+            reducedAssociations.set(node2, mappings);
           }
         });
         return reducedAssociations;
@@ -27840,8 +27840,8 @@ function addPrimitiveAttributes(geometry, primitiveDef, parser) {
     pending.push(assignAttributeAccessor(attributes[gltfAttributeName], threeAttributeName));
   }
   if (primitiveDef.indices !== undefined && !geometry.index) {
-    const accessor = parser.getDependency("accessor", primitiveDef.indices).then(function(accessor) {
-      geometry.setIndex(accessor);
+    const accessor = parser.getDependency("accessor", primitiveDef.indices).then(function(accessor2) {
+      geometry.setIndex(accessor2);
     });
     pending.push(accessor);
   }
@@ -28219,8 +28219,8 @@ void main() {
 var common2 = `
 precision highp float;
 varying vec2 vUv;
-uniform float uTime, uFoil, uScale, uDepth, uBgDepth, uFinish, uHasLine, uRelief, uSafeScale, uFxDepth, uHasFx;
-uniform vec2 uFit, uSafeOffset;
+uniform float uTime, uFoil, uScale, uDepth, uBgDepth, uFinish, uHasLine, uRelief;
+uniform vec2 uFit;
 uniform vec3 uView;
 float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1,311.7))) * 43758.5453); }
 float inside(vec2 p) { return step(0.,p.x)*step(0.,p.y)*step(p.x,1.)*step(p.y,1.); }
@@ -28250,21 +28250,16 @@ float sweep(vec2 uv) {
 }
 `;
 var frontFragment = common2 + `
-uniform sampler2D tSubject, tBackground, tText, tLine, tEffects;
+uniform sampler2D tSubject, tBackground, tText, tLine;
 void main() {
   vec2 uv = vUv;
-  vec2 su = ((parallax(uv,uDepth)-.5)*uScale/uFit+.5)*uSafeScale+uSafeOffset;
+  vec2 su = (parallax(uv,uDepth)-.5)*uScale/uFit+.5;
   vec2 bu = parallax(uv,uBgDepth);
   vec4 subject = texture2D(tSubject,clamp(su,0.,1.));
   subject.a *= inside(su)*(1.-uRelief);
   vec3 bg = texture2D(tBackground,clamp(bu,0.,1.)).rgb;
   vec3 col = mix(bg,subject.rgb,subject.a);
   if (uFinish > 2.5) col = col * vec3(1.02, .95, .78) + vec3(.05, .012, 0.0);
-  // Effects layer floats between the subject and the text: above the character,
-  // below the typography, with its own mid-depth parallax.
-  vec2 eu = parallax(uv,uFxDepth);
-  vec4 fx = texture2D(tEffects,clamp(eu,0.,1.));
-  col = mix(col,fx.rgb,fx.a*(1.-uRelief)*uHasFx);
   vec3 foil = film(uv);
   float amount = strength();
   float luminance = dot(col,vec3(.2126,.7152,.0722));
@@ -28324,13 +28319,13 @@ var effectsFragment = common2 + `
 uniform sampler2D tEffects;
 void main() {
   vec4 art=texture2D(tEffects,vUv);
-  // The relief effects layer is a pre-cut RGBA asset: use its real alpha so
-  // thorn/spark deco keeps its silhouette instead of a color-channel matte.
-  float alpha=art.a;
+  float luminance=max(art.r,max(art.g,art.b));
+  float petal=step(art.g*2.,art.r)*smoothstep(.15,.55,art.r)*smoothstep(.15,.5,art.r-art.g);
+  float spark=smoothstep(.76,.96,luminance);
+  float edgeFade=smoothstep(0.,.09,min(min(vUv.x,1.-vUv.x),min(vUv.y,1.-vUv.y)));
+  float alpha=max(petal*.92,spark*.65)*edgeFade;
   if(alpha<.015)discard;
-  vec3 col=art.rgb;
-  col+=film(vUv)*sweep(vUv)*strength()*.08;
-  gl_FragColor=vec4(pow(clamp(col,0.,1.),vec3(2.2)),alpha);
+  gl_FragColor=vec4(pow(art.rgb,vec3(2.2)),alpha);
   #include <colorspace_fragment>
 }
 `;
@@ -28466,12 +28461,9 @@ async function init() {
   const textures = await Promise.all(["subject", "background", "text"].map((name) => textureLoader.loadAsync(config.assets[name])));
   const line = config.assets.lineart ? await textureLoader.loadAsync(config.assets.lineart) : new DataTexture(new Uint8Array([255, 255, 255, 255]), 1, 1);
   line.needsUpdate = true;
-  const hasFx = !!config.assets.effects;
-  const effects = hasFx ? await textureLoader.loadAsync(config.assets.effects) : new DataTexture(new Uint8Array([0, 0, 0, 0]), 1, 1);
+  const effects = config.assets.effects ? await textureLoader.loadAsync(config.assets.effects) : line;
   effects.colorSpace = NoColorSpace;
-  if (!hasFx)
-    effects.needsUpdate = true;
-  [...textures, line, effects].forEach((t) => {
+  [...textures, line].forEach((t) => {
     t.colorSpace = NoColorSpace;
     t.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
   });
@@ -28495,20 +28487,14 @@ async function init() {
     uScale: { value: p.subjectScale ?? 1 },
     uDepth: { value: p.subjectDepth ?? 0.32 },
     uBgDepth: { value: p.backgroundDepth ?? -0.18 },
-    uSafeScale: { value: config.safeArea?.scale ?? 1 },
-    uSafeOffset: {
-      value: new Vector2(config.safeArea?.offset?.[0] ?? 0, 1 - (config.safeArea?.scale ?? 1) - (config.safeArea?.offset?.[1] ?? 0))
-    },
-    uFxDepth: { value: p.effectsDepth ?? 0.14 },
-    uHasFx: { value: hasFx ? 1 : 0 },
     uFinish: { value: 0 },
     uHasLine: { value: config.assets.lineart ? 1 : 0 },
     uRelief: { value: config.sourceMode === "relief" ? 1 : 0 }
   };
-  const material = (fragment) => new ShaderMaterial({
+  const material = (fragment2) => new ShaderMaterial({
     uniforms,
     vertexShader: vertex2,
-    fragmentShader: fragment,
+    fragmentShader: fragment2,
     side: FrontSide
   });
   const materials = {
@@ -28517,8 +28503,8 @@ async function init() {
     web_edge: material(edgeFragment),
     web_gold: new MeshBasicMaterial({ color: "#c9a24a" })
   };
-  for (const [role, fragment] of [["web_subject", subjectFragment], ["web_effects", effectsFragment], ["web_text", textFragment]]) {
-    materials[role] = material(fragment);
+  for (const [role, fragment2] of [["web_subject", subjectFragment], ["web_effects", effectsFragment], ["web_text", textFragment]]) {
+    materials[role] = material(fragment2);
     materials[role].transparent = true;
     materials[role].depthWrite = role !== "web_effects";
   }
@@ -28573,7 +28559,7 @@ async function init() {
   resize();
   renderer.compile(scene, camera);
   renderer.render(scene, camera);
-  const shaderErrors = (renderer.info.programs || []).filter((p) => p.diagnostics && !p.diagnostics.runnable);
+  const shaderErrors = (renderer.info.programs || []).filter((p2) => p2.diagnostics && !p2.diagnostics.runnable);
   if (shaderErrors.length) {
     renderer.dispose();
     renderer.domElement.remove();
@@ -28601,7 +28587,7 @@ async function init() {
 }
 function fallback3D(error) {
   console.warn("[holo-card] WebGL unavailable, using CSS-3D fallback:", error);
-  const roleZ = { background: -48, effects: -25, subject: -8, lineart: 24, text: 28 };
+  const roleZ = { background: -48, effects: -25, subject: -8, text: 16, lineart: 28 };
   const wrap = document.createElement("div");
   wrap.className = "fallback3d";
   const flipper = document.createElement("div");
@@ -28612,7 +28598,7 @@ function fallback3D(error) {
   const front = document.createElement("div");
   front.className = "face3d front3d";
   const layers = new Map;
-  for (const name of ["background", "effects", "subject", "lineart", "text"]) {
+  for (const name of ["background", "effects", "subject", "text", "lineart"]) {
     if (!config?.assets?.[name])
       continue;
     const layer = document.createElement("div");
@@ -28623,8 +28609,6 @@ function fallback3D(error) {
     img.loading = "eager";
     layer.append(img);
     front.append(layer);
-    if (name === "lineart")
-      layer.style.mixBlendMode = "multiply";
     layers.set(name, { el: layer, z: roleZ[name] });
   }
   const foil = document.createElement("div");
@@ -28774,10 +28758,10 @@ function resize() {
   if (!renderer)
     return;
   const { clientWidth: width, clientHeight: height } = stage;
-  const aspect = width / height;
-  const halfHeight = Math.max(config.sourceMode === "relief" ? 6.25 : 5.45, 4.5 / aspect) / zoom;
-  camera.left = -halfHeight * aspect;
-  camera.right = halfHeight * aspect;
+  const aspect2 = width / height;
+  const halfHeight = Math.max(config.sourceMode === "relief" ? 6.25 : 5.45, 4.5 / aspect2) / zoom;
+  camera.left = -halfHeight * aspect2;
+  camera.right = halfHeight * aspect2;
   camera.top = halfHeight;
   camera.bottom = -halfHeight;
   camera.updateProjectionMatrix();
@@ -29050,18 +29034,18 @@ function animate(now) {
   renderer.render(scene, camera);
 }
 var fail = (message) => {
-  const loading = $("loading");
-  if (loading && window.__holo && window.__holo.ready)
+  const loading2 = $("loading");
+  if (loading2 && window.__holo && window.__holo.ready)
     return;
-  loading?.classList.add("error");
-  loading?.setAttribute("role", "alert");
-  loading?.replaceChildren();
+  loading2?.classList.add("error");
+  loading2?.setAttribute("role", "alert");
+  loading2?.replaceChildren();
   const msg = document.createElement("span");
   msg.textContent = message;
   const retry = document.createElement("button");
   retry.textContent = "重新加载";
   retry.onclick = () => location.reload();
-  loading?.append(msg, retry);
+  loading2?.append(msg, retry);
   window.__holo = { ready: false, error: message };
 };
 var LOAD_TIMEOUT_MS = 12000;
