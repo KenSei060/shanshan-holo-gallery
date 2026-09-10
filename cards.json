@@ -16,5 +16,14 @@
     "tagline": "无限城篇",
     "path": "./cards/mitsuri-infinity-castle/",
     "thumb": "./cards/mitsuri-infinity-castle/assets/subject.png"
+  },
+  {
+    "id": "mitsuri-haori-infinity",
+    "title": "甘露寺蜜璃",
+    "subtitle": "恋柱",
+    "technique": "恋之呼吸",
+    "tagline": "无限城 · 羽织篇",
+    "path": "./cards/mitsuri-haori-infinity/",
+    "thumb": "./cards/mitsuri-haori-infinity/assets/subject.png"
   }
 ]
