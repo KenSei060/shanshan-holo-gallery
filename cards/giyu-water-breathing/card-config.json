@@ -1,0 +1,30 @@
+{
+  "title": "富冈义勇",
+  "subtitle": "水柱",
+  "technique": "水之呼吸",
+  "tagline": "第十一型 · 凪",
+  "edition": "001 / 100",
+  "collection": "鬼灭全息典藏",
+  "description": "水柱富冈义勇施展水之呼吸绝招，刀势如潮。",
+  "font": "/usr/share/fonts/opentype/noto/NotoSerifCJK-Bold.ttc",
+  "assets": {
+    "subject": "./assets/subject.png",
+    "background": "./assets/background.png",
+    "text": "./assets/text.png",
+    "lineart": "./assets/lineart.png",
+    "model": "./assets/card.glb"
+  },
+  "parameters": {
+    "subjectScale": 1.25,
+    "subjectDepth": 0.28,
+    "backgroundDepth": -0.2,
+    "foil": 0.65
+  },
+  "safeArea": {
+    "scale": 1.12,
+    "offset": [
+      -0.06,
+      -0.085
+    ]
+  }
+}

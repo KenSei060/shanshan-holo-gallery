@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0b1020" />
+  <title>闪闪卡馆 · Holo Gallery</title>
+  <link rel="stylesheet" href="./gallery.css" />
+</head>
+<body>
+  <div class="shell">
+    <aside class="rail" aria-label="卡片列表">
+      <header class="brand">
+        <div class="brand-cn">闪闪卡馆</div>
+        <div class="brand-en">HOLO GALLERY</div>
+      </header>
+      <p class="hint">点击卡片名称切换展示</p>
+      <nav id="card-list" class="card-list"></nav>
+      <footer class="rail-foot">新卡会自动加入此列表</footer>
+    </aside>
+    <main class="stage">
+      <div class="stage-bar">
+        <div id="stage-title" class="stage-title">加载中…</div>
+        <a id="open-tab" class="open-tab" href="#" target="_blank" rel="noopener">单独打开</a>
+      </div>
+      <iframe id="viewer" class="viewer" title="闪卡预览" allow="fullscreen"></iframe>
+    </main>
+  </div>
+  <script src="./gallery.js"></script>
+</body>
+</html>
