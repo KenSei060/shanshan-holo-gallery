@@ -1,0 +1,30 @@
+{
+  "title": "我妻善逸",
+  "subtitle": "雷之呼吸",
+  "technique": "霹雳一闪",
+  "tagline": "壹之型",
+  "edition": "004 / 100",
+  "collection": "鬼灭全息典藏",
+  "description": "我妻善逸蹲姿拔刀预备，雷之呼吸闪电环绕。",
+  "font": "/usr/share/fonts/opentype/noto/NotoSerifCJK-Bold.ttc",
+  "assets": {
+    "subject": "./assets/subject.png",
+    "background": "./assets/background.png",
+    "text": "./assets/text.png",
+    "lineart": "./assets/lineart.png",
+    "model": "./assets/card.glb"
+  },
+  "parameters": {
+    "subjectScale": 1.25,
+    "subjectDepth": 0.28,
+    "backgroundDepth": -0.2,
+    "foil": 0.72
+  },
+  "safeArea": {
+    "scale": 1.12,
+    "offset": [
+      -0.06,
+      -0.085
+    ]
+  }
+}

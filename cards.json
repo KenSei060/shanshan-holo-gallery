@@ -25,5 +25,14 @@
     "tagline": "无限城 · 羽织篇",
     "path": "./cards/mitsuri-haori-infinity/",
     "thumb": "./cards/mitsuri-haori-infinity/assets/subject.png"
+  },
+  {
+    "id": "zenitsu-thunder",
+    "title": "我妻善逸",
+    "subtitle": "雷之呼吸",
+    "technique": "霹雳一闪",
+    "tagline": "壹之型",
+    "path": "./cards/zenitsu-thunder/",
+    "thumb": "./cards/zenitsu-thunder/assets/subject.png"
   }
 ]
